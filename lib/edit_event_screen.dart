@@ -1,10 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:project_calendar/constant.dart';
 import 'package:project_calendar/sqlite/event.dart';
 import 'sqlite/db.dart';
 import 'sqlite/course.dart';
 
+/* edit and delete event page */
 class EditEventScreen extends StatefulWidget {
   final Event event;
 
@@ -84,7 +86,7 @@ class _EditEventScreenState extends State<EditEventScreen> {
               ),
             ),
           ],
-          backgroundColor: Color(0xFFffccbc),
+          backgroundColor: kBackgroundColor2,
         ),
         body: Column(children: <Widget>[
           Container(

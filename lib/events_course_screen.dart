@@ -5,12 +5,12 @@ import 'package:intl/intl.dart';
 import 'constant.dart';
 
 class EventsOfCourse extends StatelessWidget {
-  const EventsOfCourse(
-      {required this.selectedCourses, required this.courseName});
+  const EventsOfCourse({required this.events, required this.courseName});
 
-  final List<Event> selectedCourses;
+  final List<Event> events;
   final String courseName;
 
+  /* display all events of the selected course */
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,7 +23,7 @@ class EventsOfCourse extends StatelessWidget {
         backgroundColor: kBackgroundColor,
       ),
       body: ListView(
-          children: selectedCourses
+          children: events
               .map((event) => Card(
                       child: ListTile(
                     title: Text(event.toString(),

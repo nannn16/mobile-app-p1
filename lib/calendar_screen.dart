@@ -52,7 +52,6 @@ class _CalendarEventsScreenState extends State<CalendarEventsScreen> {
     setState(() {
       events = {};
       for (var element in allEventsPair) {
-        print(element);
         DateTime date = DateTime.parse(element.item1.date);
         if (events.containsKey(date)) {
           events[date]?.add(element);
@@ -73,11 +72,13 @@ class _CalendarEventsScreenState extends State<CalendarEventsScreen> {
       setState(() {
         selectedDate = tapedDay;
         focusedDate = focusDay;
+        // when selected a day, fetch the new listview to display the events
         selectedEvents = getEventsFromDay(selectedDate);
       });
     }
   }
 
+  /* navigate and get added event from the event entry screen page */
   Future<void> navigateAndGetAddedEvent(BuildContext context) async {
     final result = await Navigator.push(
       context,
@@ -91,6 +92,7 @@ class _CalendarEventsScreenState extends State<CalendarEventsScreen> {
     }
   }
 
+  /* navigate and get edited event from the edit event screen page */
   Future<void> navigateAndGetEditEvent(
       BuildContext context, Event event) async {
     final result = await Navigator.push(
@@ -144,19 +146,11 @@ class _CalendarEventsScreenState extends State<CalendarEventsScreen> {
               children: <Widget>[
                 Text(
                   'Schedule',
-                  style: TextStyle(
-                      color: Colors.black,
-                      fontFamily: 'Mulish',
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold),
+                  style: titleTextStyle,
                 ),
-                SizedBox(height: 5),
                 Text(
                   DateFormat('dd MMM yyyy').format(selectedDate),
-                  style: TextStyle(
-                      color: Colors.black87,
-                      fontFamily: 'Mulish',
-                      fontSize: 16),
+                  style: subtitleTextStyle,
                 ),
               ],
             )),
@@ -166,10 +160,7 @@ class _CalendarEventsScreenState extends State<CalendarEventsScreen> {
                 .map((event) => Card(
                         child: ListTile(
                       title: Text(event.item1.toString(),
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontFamily: 'Mulish',
-                              fontSize: 18)),
+                          style: subtitleTextStyle),
                       subtitle: Text('Course: ' + event.item2.toString()),
                       onTap: () =>
                           navigateAndGetEditEvent(context, event.item1),

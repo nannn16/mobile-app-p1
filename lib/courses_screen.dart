@@ -21,11 +21,7 @@ class _CourseScreenState extends State<CourseScreen> {
   late Map<String, List<Event>> classesMap;
   List<Event> selectedCourses = [];
 
-  void fetchCourses() async {
-    List<Map<String, dynamic>> coursesResults =
-        await DB.instance.getAllCourses();
-    List<Course> allCourses =
-        coursesResults.map((course) => Course.fromMap(course)).toList();
+  void fetchEvents() async {
     List<Map<String, dynamic>> eventsResults = await DB.instance.getAllEvents();
     List<Event> allEvents =
         eventsResults.map((event) => Event.fromMap(event)).toList();
@@ -37,8 +33,6 @@ class _CourseScreenState extends State<CourseScreen> {
       allEventsPair.add(Tuple2(event, c));
     }
     setState(() {
-      classes = [];
-      classes = allCourses;
       classesMap = {};
       for (Tuple2 pair in allEventsPair) {
         if (classesMap.containsKey(pair.item2.toString())) {
@@ -50,11 +44,25 @@ class _CourseScreenState extends State<CourseScreen> {
     });
   }
 
+  void fetchCourses() async {
+    List<Map<String, dynamic>> coursesResults =
+        await DB.instance.getAllCourses();
+    List<Course> allCourses =
+        coursesResults.map((course) => Course.fromMap(course)).toList();
+    setState(() {
+      classes = [];
+      classes = allCourses;
+    });
+  }
+
   @override
   void initState() {
     classes = [];
     classesMap = {};
-    DB.instance.initDB().then((value) => fetchCourses());
+    DB.instance.initDB().then((value) {
+      fetchCourses();
+      fetchEvents();
+    });
     super.initState();
   }
 
@@ -84,11 +92,7 @@ class _CourseScreenState extends State<CourseScreen> {
         children: <Widget>[
           Text(
             'Courses',
-            style: TextStyle(
-                color: Colors.black,
-                fontFamily: 'Mulish',
-                fontSize: 24,
-                fontWeight: FontWeight.bold),
+            style: titleTextStyle,
           ),
           Expanded(
             child: ListView(
@@ -96,10 +100,7 @@ class _CourseScreenState extends State<CourseScreen> {
                   .map((subject) => Card(
                         child: ListTile(
                           title: Text(subject.toString(),
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontFamily: 'Mulish',
-                                  fontSize: 18)),
+                              style: subtitleTextStyle),
                           onTap: () {
                             setState(() {
                               selectedCourses =
@@ -109,7 +110,7 @@ class _CourseScreenState extends State<CourseScreen> {
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) => EventsOfCourse(
-                                          selectedCourses: selectedCourses,
+                                          events: selectedCourses,
                                           courseName: subject.toString(),
                                         )));
                           },

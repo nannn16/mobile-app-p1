@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:project_calendar/constant.dart';
 import 'sqlite/course.dart';
 
 class CourseEntryScreen extends StatefulWidget {
@@ -41,7 +42,7 @@ class _CourseEntryScreenState extends State<CourseEntryScreen> {
             ),
           ),
         ],
-        backgroundColor: Color(0xFFffccbc),
+        backgroundColor: kBackgroundColor2,
       ),
       body: Column(children: <Widget>[
         Container(

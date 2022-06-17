@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+/* date marker in the calendar */
 class DateMarker extends StatelessWidget {
   DateMarker({required this.date, required this.color});
 

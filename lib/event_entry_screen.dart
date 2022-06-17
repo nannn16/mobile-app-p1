@@ -1,10 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:project_calendar/constant.dart';
 import 'package:project_calendar/sqlite/event.dart';
 import 'sqlite/course.dart';
 import 'sqlite/db.dart';
 
+/* create a new event page */
 class EventScreen extends StatefulWidget {
   const EventScreen({Key? key}) : super(key: key);
 
@@ -74,7 +76,7 @@ class _EventScreenState extends State<EventScreen> {
               ),
             ),
           ],
-          backgroundColor: Color(0xFFffccbc),
+          backgroundColor: kBackgroundColor2,
         ),
         body: Column(children: <Widget>[
           Container(
@@ -92,6 +94,7 @@ class _EventScreenState extends State<EventScreen> {
               },
             ),
           ),
+          // to select the date
           Container(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
               child: Row(
@@ -125,13 +128,15 @@ class _EventScreenState extends State<EventScreen> {
                           DateTime getDate = date!;
                           dateTime = DateTime(
                               getDate.year, getDate.month, getDate.day);
-                          dateTime = DateTime.parse(dateTime.toString() + 'Z');
+                          dateTime = DateTime.parse(
+                              dateTime.toString() + 'Z'); // format the date
                         });
                       });
                     },
                   ),
                 ],
               )),
+          // dropdown button where user can select courses.
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
             child: Row(
